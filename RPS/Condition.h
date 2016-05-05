@@ -8,7 +8,7 @@
 #include <algorithm>
 
 
-#define PLAYERONE	1
+#define PLAYERONE	true
 
 
 ///<summary>

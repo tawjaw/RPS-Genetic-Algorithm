@@ -20,17 +20,17 @@ struct Coevolution
 {
 	Population p1;
 	Population p2;
-	Coevolution() : p1(500, true), p2(500, false) {}
+	Coevolution() : p1(50000, true), p2(50000, false) {}
 	///<summary>
 	///do something
 	///</summary>
 	void Play()
 	{
 		output1.open("score.csv");
-		output2.open("win1.csv");
-		output3.open("win2.csv");
-		output4.open("anr1.csv");
-		output5.open("anr2.csv");
+		output2.open("avgnorules1.csv");
+		output3.open("avgnorules2.csv");
+		output4.open("avegfitness1.csv");
+		output5.open("avegfitness2.csv");
 		output6.open("aac1.csv");
 		output7.open("aac2.csv");
 		int rounds = 0;
@@ -45,17 +45,32 @@ struct Coevolution
 			{
 				p1.updateNextMoves();
 				p2.updateNextMoves();
+				p1.switchChampion();
+				p2.switchChampion();
 				MOVE p1Move = p1.Champion->nextMove;
 				MOVE p2Move = p2.Champion->nextMove;
 
-
-				//	output1 << score1 << ",";
+				
+					
 					//output2 << win1 << ",";
 				//	output3 << win2 << ",";
-					//output4 << p1.averageNumberOfRules() << ",";
-					//output5 << p2.averageNumberOfRules() << ",";
-					//output6 << p1.averageAccurucyOfRules() << ",";
-					//output7 << p2.averageAccurucyOfRules() << ",";
+					//
+					//
+
+				
+				
+				//std::cout << win1 << std::endl;
+			//	std::cout << win2 << std::endl;
+
+			//add move to history
+				push_History(std::make_pair(p1Move, p2Move));
+				if (static_cast<int>(createCondition(p1Move, p2Move) < pow(2, 3)))
+					score1++;
+				else if (static_cast<int>(createCondition(p1Move, p2Move) > pow(2, 5)))
+					score1--;
+
+				output1 << score1 << ",";
+				//update the fitnesses of all players in every population based on the champions' moves
 
 				p1.updateFitnesses();
 				p2.updateFitnesses();
@@ -65,15 +80,6 @@ struct Coevolution
 
 				output4 << p1.averageFitness << ",";
 				output5 << p2.averageFitness << ",";
-				p1.switchChampion();
-				p2.switchChampion();
-				//std::cout << win1 << std::endl;
-			//	std::cout << win2 << std::endl;
-
-			//add move to history
-				push_History(std::make_pair(p1Move, p2Move));
-
-				//update the fitnesses of all players in every population based on the champions' moves
 
 				//std::cout << "champion fitness 1:    " << p1.Champion->fitness << std::endl;
 				//std::cout << "champion fitness 2:    " << p2.Champion->fitness << std::endl;
@@ -82,9 +88,13 @@ struct Coevolution
 				std::cout << "average number of rules of population 2:    " << p2.averageNumberOfRules() << std::endl;
 				std::cout << "average fitness 1 : " << p1.averageFitness << std::endl;
 				std::cout << "average fitness 2 : " << p2.averageFitness << std::endl;
-				
+				output2 << p1.averageNumberOfRules() << ",";
+				output3 << p2.averageNumberOfRules() << ",";
+				output6 << p1.averageAccurucyOfRules() << ",";
+				output7 << p2.averageAccurucyOfRules() << ",";
 			}
-			
+			//p1.switchChampion();
+			//p2.switchChampion();
 			
 			p1.evolve();
 			p2.evolve();
@@ -101,16 +111,17 @@ struct Coevolution
 		output3.close();
 		output4.close();
 		output5.close();
-
+		output6.close();
+		output7.close();
 	}
 
+	//play against human
 	void Play2()
 	{
 		int rounds = 1000;
 		while (rounds > 0)
 		{
 			rounds--;
-			//play 5 rounds and save champions moves in history
 			for (int i = 0; i < 3; i++)
 			{
 
@@ -140,7 +151,7 @@ struct Coevolution
 				{
 					score1--; win2++;
 				}
-				output1 << score1 << ",";
+			/*	output1 << score1 << ",";
 				output2 << win1 << ",";
 			//	output3 << win2 << ",";
 				output4 << p1.averageNumberOfRules() << ",";
@@ -152,7 +163,7 @@ struct Coevolution
 				//std::cout << "average fitness 2:    " << p2.averageFitness << std::endl;
 				std::cout << "champion fitness 1:    " << p1.Champion->fitness << std::endl;
 				//std::cout << "champion fitness 2:    " << p2.Champion->fitness << std::endl;
-				print_History(1);
+				print_History(1);*/
 			}
 			
 			p1.evolve();

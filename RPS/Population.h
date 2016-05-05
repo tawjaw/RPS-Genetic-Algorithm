@@ -113,7 +113,7 @@ struct Population
 		}
 
 		individuals = parents;
-
+		switchChampion();
 		//sort(begin(individuals), end(individuals), less_than_key());
 		
 //		Champion = individuals.back();

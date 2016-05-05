@@ -25,6 +25,7 @@ struct Individual
 	//constructor to randomly create an individual
 	Individual(bool p) : fitness(0.48 + (float)(rand() % 50 / 1000.0)), defaultMove(static_cast<MOVE>(rand() % 3)), id(counter_id)
 	{
+		nextMove = defaultMove;
 		isPlayerOne = p;
 		counter_id++;
 		//cout << "constructor one is called " << endl;
@@ -56,6 +57,7 @@ struct Individual
 	//if mutate == false then copy individual with no mutation 
 	Individual(Individual &parent, bool mutate) : fitness(0.48 + (float)(rand() % 50 / 1000.0)), isPlayerOne(parent.isPlayerOne), rules(parent.rules), defaultMove(static_cast<MOVE>(rand() % 3)), id(counter_id)
 	{
+		nextMove = defaultMove;
 		counter_id++;
 		//cout << " constructor 3 is called " << endl;
 		assert(!parent.rules.empty());
@@ -183,7 +185,7 @@ struct Individual
 		}
 		else
 		{
-			nextMove = defaultMove;
+			//nextMove = defaultMove;
 		}
 
 	}
@@ -205,30 +207,34 @@ struct Individual
 			{
 				if (static_cast<int>(createCondition(nextMove, History.at(History.size() - 1).second)) < pow(2, 3))
 				{
-					reward = 1; fitness = fitness*(1 - alpha) + reward*alpha;
+					reward = 1; //fitness = fitness*(1 - alpha) + reward*alpha;
 				}
 				else if (static_cast<int>(createCondition(nextMove, History.at(History.size() - 1).second)) > pow(2, 5))
 				{
-					reward = -1; fitness = fitness*(1 - alpha) + reward*alpha;
+					reward = -1; //fitness = fitness*(1 - alpha) + reward*alpha;
 				}
-				/*else
-				{
-					reward = -2; fitness = fitness*(1 - alpha) + reward*alpha;
-				}*/
+				
+				
 				//fitness = fitness*alpha + reward*(1 - alpha);
 			}
 			else
 			{
 				if (static_cast<int>(createCondition(History.at(History.size() - 1).first, nextMove)) < pow(2, 3))
 				{
-					reward = -1; fitness = fitness*(1 - alpha) + reward*alpha;
+					reward = -1; //fitness = fitness*(1 - alpha) + reward*alpha;
 				}
 				else if (static_cast<int>(createCondition(History.at(History.size() - 1).first, nextMove)) > pow(2, 5))
 				{
-					reward = 1; fitness = fitness*(1 - alpha) + reward*alpha;
+					reward = 1;// fitness = fitness*(1 - alpha) + reward*alpha;
 				}
+				/*else
+				{
+					reward = -0.7; fitness = fitness*(1 - alpha) + reward*alpha;
+				}*/
+
 			}
 			
+			fitness = fitness*(1 - alpha) + reward*alpha;
 
 		}
 	}

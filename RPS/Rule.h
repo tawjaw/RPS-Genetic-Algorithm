@@ -34,7 +34,7 @@ int get_rule_Score(Rule rule)
 	int score = 0;
 	for_each(begin(rule.first), end(rule.first) , [&score](CONDITION &cdn) { score += getConditionScore(cdn); });
 	return score;
-	//return 0;
+	return 0;
 }
 /*
 void print_Rule(Rule &rule)

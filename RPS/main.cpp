@@ -11,5 +11,6 @@ int main()
 	
 	Coevolution c;
 	c.Play();
+	std::cout << "Done";
 	getchar();
 }
