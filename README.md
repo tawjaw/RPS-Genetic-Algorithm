@@ -7,10 +7,13 @@ competition for survival occurs (survivor of the fittest). The
 higher the fitness of an individual the higher the chance of its
 selection to survive by nature. The process in which an
 evolutionary algorithm works is as follows: given a population
-of individuals, 1. evaluate the fitness of all individuals in the
-population, 2. select parents from the population to 3. generate
-the offspring of individuals using mutation and crossover, and
-finally 4. select from the new generated offspring the next
+of individuals: 
+1. evaluate the fitness of all individuals in the
+population
+2. select parents from the population to 
+3. generate the offspring of individuals using mutation and crossover, and
+finally 
+4. select from the new generated offspring the next
 population based on their fitness (survivor of the fittest)
 ## Individual
 Every individual contains a set of RPS rules. These rules
